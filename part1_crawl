@@ -1,0 +1,61 @@
+#목표: 나만의 파이낸셜 대시보드를 만든다.
+# 세부 목표 1: 파이낼셜 데이터를 실시간으로 가져온다. 
+# 세부 목표 2: 파이낸셜 데이터 간 상관관계와 업틱을 실시간으로 나에게 알려준다. 
+# 세부 목표 3: 파이낸셜 데이터 간 관계를 시각화한다.
+# 세부 목표 4: 시각화한 데이터를 앱 형태로 핸드폰에서 조회 가능케 한다.
+
+
+
+#세부 목표 1: 데이터를 가져온다. 미주와 한국 주식을 둘다 가져오면 좋겠음.
+
+import requests
+import pandas as pd
+
+# Replace YOUR_API_KEY with your Alpha Vantage API key
+AV_API_KEY = "0E5907M8C7WGY8OT"
+
+def get_realtime_data(symbol):
+    url = f"https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={symbol}&apikey={AV_API_KEY}"
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        raise Exception("Failed to get data")
+
+def main():
+    # List of S&P 500 symbols
+    symbols = [
+        "AAPL", "ABBV", "ABT", "ACN", "ADBE", "AGN", "AIG", "ALL", "AMGN",
+        "AMZN", "AXP", "BA", "BAC", "BIIB", "BK", "BKNG", "BLK", "BMY",
+        "BRK.B", "C", "CAT", "CELG", "CHTR", "CL", "CMCSA", "COF", "COP",
+        "COST", "CSCO", "CVS", "CVX", "DD", "DHR", "DIS", "DOW", "DUK",
+        "EMR", "EXC", "F", "FB", "FDX", "GD", "GE", "GILD", "GM", "GOOG",
+        "GOOGL", "GS", "HD", "HON", "IBM", "INTC", "JNJ", "JPM", "KHC",
+        "KMI", "KO", "LLY", "LMT", "LOW", "MA", "MCD", "MDLZ", "MDT",
+        "MET", "MMM", "MO", "MRK", "MS", "MSFT", "NEE", "NFLX", "NKE",
+        "NVDA", "ORCL", "OXY", "PEP", "PFE", "PG", "PM", "PNC", "PRU",
+        "PSX", "PYPL", "QCOM", "RTN", "SBUX", "SLB", "SO", "SPG", "T",
+        "TGT", "TMO", "TXN", "UNH", "UNP", "UPS", "USB", "UTX", "V",
+        "VZ", "WBA", "WFC", "WMT", "XOM"
+    ]
+
+    data = {}
+    for symbol in symbols:
+        realtime_data = get_realtime_data(symbol)
+        data[symbol] = {
+            "symbol": realtime_data["Global Quote"]["01. symbol"],
+            "price": realtime_data["Global Quote"]["05. price"],
+            "volume": realtime_data["Global Quote"]["06. volume"],
+            "timestamp": realtime_data["Global Quote"]["07. latest trading day"],
+        }
+
+    # Convert the data to a pandas DataFrame
+    df = pd.concat
+    
+    
+    # 세부 목표 2: 파이낸셜 데이터 간 상관관계와 업틱을 실시간으로 나에게 알려준다. 
+# 갑자기 업틱이 있을 경우, 찾아서 노티스를 준다. 
+
+#업틱의 기준? 
+# 상관관계의 기준? 
+
